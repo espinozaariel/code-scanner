@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+// import App from './App';
+// import App from './Html5';
+// import App from './Html5QrcodeJs';
+// import App from './ZXingWithQR';
+// import App from './ZXingWorkingBugBarCode';
+// import App from './Html5qrcode';
+import App from './JsQRQuagga';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
