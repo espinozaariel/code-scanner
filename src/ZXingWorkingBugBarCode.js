@@ -8,20 +8,19 @@ function BarcodeDecoder() {
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    console.log(file, 'file')
     const reader = new FileReader();
 
-    reader.onload = async () => {
+    reader.onload = async (event) => {
       const imageDataUrl = reader.result;
-        console.log(imageDataUrl, 'imagedataURL')
+      const imageUrl = event.target.result;
+      console.log(reader.result, 'readerresult')
+      console.log(event.target.result, 'eventtarget')
       try {
         const barcodeValue = await decodeBarcodeFromImage(imageDataUrl);
-        setBarcodeValue(barcodeValue);
+        const otherValue = await decodeBarcodeFromImage(imageUrl);
         setErrorMessage('');
+        setBarcodeValue('')
       } catch (error) {
-        console.error('Barcode decoding error:', error);
-        setBarcodeValue('Barcode not detected');
-        setErrorMessage('Barcode not detected');
       }
     };
 
@@ -31,7 +30,7 @@ function BarcodeDecoder() {
   const decodeBarcodeFromImage = async (imageDataUrl) => {
     const codeReader = new BrowserBarcodeReader();
     const result = await codeReader.decodeFromImageUrl(imageDataUrl, undefined, BarcodeFormat.ALL);
-    console.log(result, 'result')
+    setBarcodeValue(result.text)
     return result.text;
   };
 
@@ -39,7 +38,7 @@ function BarcodeDecoder() {
     <div className='App'>
       <div className='App-header'>
         <input type="file" accept="image/*" onChange={handleFileUpload} />
-        {barcodeValue && <p>Barcode Value: {barcodeValue}</p>}
+        <p>Barcode Value: {barcodeValue}</p>
         {errorMessage && <p>Error: {errorMessage}</p>}
       </div>
     </div>
